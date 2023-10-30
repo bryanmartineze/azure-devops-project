@@ -5,7 +5,7 @@ version = datetime.now().strftime("%Y%m%d%H%M%S")
 
 setup(
     name="DadJokes",
-    version="1.0",
+    version="version",
     packages=["DadJokes"],
     install_requires=[
         "Flask",
