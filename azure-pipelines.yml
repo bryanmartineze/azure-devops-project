@@ -25,8 +25,8 @@ steps:
      pip install twine
 
 - script: |
-     pwd
-     python microservices/DadJokes/setup.py bdist_wheel
+     cd microservices
+     python DadJokes/setup.py bdist_wheel
   
 - task: TwineAuthenticate@1
   displayName: Twine Authenticate
@@ -34,4 +34,5 @@ steps:
     artifactFeed: 'python_feed'       
     
 - script: |
-     python -m twine upload -'python_feed' --config-file $(PYPIRC_PATH) microservices/dist/*.whl
+     cd microservices
+     python -m twine upload -'python_feed' --config-file $(PYPIRC_PATH) dist/*.whl
