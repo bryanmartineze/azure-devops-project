@@ -16,14 +16,15 @@ strategy:
 steps:
 
 - task: UsePythonVersion@0
+  displayName: 'Use Python $(python.version)'
   inputs:
     versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
 
 - script: |
      pip install wheel
      pip install twine
 
+#package DadJokes
 - script: |
      cd microservices
      python DadJokes/setup.py bdist_wheel
@@ -36,3 +37,22 @@ steps:
 - script: |
      cd microservices
      python -m twine upload -r 'python_feed' --config-file $(PYPIRC_PATH) dist/*.whl
+
+#Package Kanye
+- script: |
+     cd microservices
+     python Kanye/setup.py bdist_wheel
+  displayName: "Build Kanye Artifact"
+  
+- task: TwineAuthenticate@1
+  displayName: Twine Authenticate
+  inputs:
+    artifactFeed: 'python_feed'       
+    
+- script: |
+     cd microservices
+     python -m twine upload -r 'python_feed' --config-file $(PYPIRC_PATH) dist/*.whl
+  displayName: "Upload Kanye Artifact"
+
+
+
