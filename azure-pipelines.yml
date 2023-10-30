@@ -25,8 +25,8 @@ steps:
      pip install twine
 
 - script: |
-     cd microservices/DadJokes
-     python setup.py bdist_wheel
+     cd microservices
+     python DadJokes/setup.py bdist_wheel
   
 - task: TwineAuthenticate@1
   displayName: Twine Authenticate
