@@ -28,22 +28,15 @@ steps:
 - script: |
      cd microservices
      python DadJokes/setup.py bdist_wheel
+  displayName: "Build DadJokes Artifact"
   
-- task: TwineAuthenticate@1
-  displayName: Twine Authenticate
-  inputs:
-    artifactFeed: 'python_feed'       
-    
-- script: |
-     cd microservices
-     python -m twine upload -r 'python_feed' --config-file $(PYPIRC_PATH) dist/*.whl
-
 #Package Kanye
 - script: |
      cd microservices
      python Kanye/setup.py bdist_wheel
   displayName: "Build Kanye Artifact"
   
+#Upload python packages
 - task: TwineAuthenticate@1
   displayName: Twine Authenticate
   inputs:
@@ -52,7 +45,7 @@ steps:
 - script: |
      cd microservices
      python -m twine upload -r 'python_feed' --config-file $(PYPIRC_PATH) dist/*.whl
-  displayName: "Upload Kanye Artifact"
+  displayName: "Upload python Artifacts"
 
 
 
