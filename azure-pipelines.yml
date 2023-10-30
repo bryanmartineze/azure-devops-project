@@ -14,38 +14,23 @@ strategy:
       python.version: '3.8'
       
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-  
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(python.version)'
   displayName: 'Use Python $(python.version)'
 
 - script: |
-    cd microservices/DadJokes
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-  displayName: 'Install dependencies'
+     pip install wheel
+     pip install twine
+
+- script: |
+     python microservices/DadJokes/setup.py bdist_wheel
   
-- script: |
-    pip install twine
-    pip install build
-
-- script: |
-    cd microservices/DadJokes
-    python -m build -w
-
 - task: TwineAuthenticate@1
+  displayName: Twine Authenticate
   inputs:
-    artifactFeed: 'python_feed'
-
+    artifactFeed: 'python_feed'       
+    
 - script: |
-    cd microservices/DadJokes
-    python -m twine upload -r azure-devops-project --config-file $(PYPIRC_PATH) dist/*.whl
-  displayName: 'upload'
+     python -m twine upload -'python_feed' --config-file $(PYPIRC_PATH) microservices/dist/*.whl
