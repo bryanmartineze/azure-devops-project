@@ -26,9 +26,6 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
   
-
-
-steps:
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(python.version)'
