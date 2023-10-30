@@ -35,4 +35,4 @@ steps:
     
 - script: |
      cd microservices
-     python -m twine upload -'python_feed' --config-file $(PYPIRC_PATH) dist/*.whl
+     python -m twine upload -r 'python_feed' --config-file $(PYPIRC_PATH) dist/*.whl
