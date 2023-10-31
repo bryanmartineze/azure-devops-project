@@ -69,3 +69,25 @@ steps:
     publishRegistry: useFeed
     publishFeed: 'nodejs_feed'
   displayName: 'Upload nodejs package'
+  
+#Build Package frontend
+- task: NodeTool@0
+  inputs:
+    versionSpec: '16.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    cd microservices/frontend
+    npm install
+    npm run css
+    npm run build
+  displayName: 'npm build'
+  
+#upload frontend Packages
+- task: Npm@1
+  inputs:
+    command: publish
+    workingDir: $(Build.SourcesDirectory)/microservices/frontend
+    publishRegistry: useFeed
+    publishFeed: 'nodejs_feed'
+  displayName: 'Upload nodejs package'
