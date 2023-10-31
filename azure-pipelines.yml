@@ -20,21 +20,23 @@ steps:
   inputs:
     versionSpec: '$(python.version)'
 
+#Install Python packagers
 - script: |
      pip install wheel
      pip install twine
+  displayName: 'Install python packagers'
 
-#package DadJokes
+#Build Package DadJokes
 - script: |
      cd microservices
      python DadJokes/setup.py bdist_wheel
   displayName: "Build DadJokes Artifact"
   
-#Package Kanye
+#Build Package Kanye
 - script: |
      cd microservices
      python Kanye/setup.py bdist_wheel
-  displayName: "Build Kanye Artifact"
+  displayName: 'Build Kanye Artifact'
   
 #Upload python packages
 - task: TwineAuthenticate@1
@@ -45,7 +47,23 @@ steps:
 - script: |
      cd microservices
      python -m twine upload -r 'python_feed' --config-file $(PYPIRC_PATH) dist/*.whl
-  displayName: "Upload python Artifacts"
+  displayName: 'Upload python Artifacts'
 
+#Build Package MyJokes
+- task: NodeTool@0
+  inputs:
+    versionSpec: '16.x'
+  displayName: 'Install Node.js'
 
-
+- script: |
+    cd microservices/MyJokes
+    npm install
+    npm run build
+  displayName: 'npm build'
+  
+#upload MyJokes Packages
+- task: Npm@1
+  inputs:
+    command: publish
+    publishRegistry: useFeed
+    publishFeed: 'nodejs_feed'
