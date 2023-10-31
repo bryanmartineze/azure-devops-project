@@ -69,7 +69,7 @@ steps:
     publishRegistry: useFeed
     publishFeed: 'nodejs_feed'
   displayName: 'Upload nodejs package'
-  continuedOnError: true
+  continueOnError: true
   
 #Build Package frontend
 - task: NodeTool@0
