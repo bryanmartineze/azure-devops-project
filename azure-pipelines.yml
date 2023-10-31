@@ -65,7 +65,7 @@ steps:
 - task: Npm@1
   inputs:
     command: publish
+    workingDir: $(Build.SourcesDirectory)/microservices/MyJokes
     publishRegistry: useFeed
     publishFeed: 'nodejs_feed'
-  workingDirectory: $(Build.SourcesDirectory)/microservices/MyJokes
   displayName: 'Upload nodejs package'
