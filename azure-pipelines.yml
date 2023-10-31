@@ -58,6 +58,10 @@ steps:
 - script: |
     cd microservices/MyJokes
     npm install
+    current_date=$(date +'%Y-%m-%d')
+    new_version=$(npm version <major|minor|patch>)
+    updated_version="${new_version}-${current_date}"
+    echo "Updated version: $updated_version"
     npm run build
   displayName: 'build nodejs'
   
@@ -80,6 +84,10 @@ steps:
 - script: |
     cd microservices/frontend
     npm install
+    current_date=$(date +'%Y-%m-%d')
+    new_version=$(npm version <major|minor|patch>)
+    updated_version="${new_version}-${current_date}"
+    echo "Updated version: $updated_version"
     npm run build
   displayName: 'build react'
   
