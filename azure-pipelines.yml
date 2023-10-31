@@ -67,3 +67,5 @@ steps:
     command: publish
     publishRegistry: useFeed
     publishFeed: 'nodejs_feed'
+  workingDirectory: $(Build.SourcesDirectory)/microservices/MyJokes
+  displayName: 'Upload nodejs package'
