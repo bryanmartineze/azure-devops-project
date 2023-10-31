@@ -59,7 +59,7 @@ steps:
     cd microservices/MyJokes
     npm install
     npm run build
-  displayName: 'npm build'
+  displayName: 'build nodejs'
   
 #upload MyJokes Packages
 - task: Npm@1
@@ -80,9 +80,8 @@ steps:
 - script: |
     cd microservices/frontend
     npm install
-    npm run css
     npm run build
-  displayName: 'npm build'
+  displayName: 'build react'
   
 #upload frontend Packages
 - task: Npm@1
@@ -90,5 +89,5 @@ steps:
     command: publish
     workingDir: $(Build.SourcesDirectory)/microservices/frontend
     publishRegistry: useFeed
-    publishFeed: 'nodejs_feed'
-  displayName: 'Upload nodejs package'
+    publishFeed: 'react_feed'
+  displayName: 'Upload react package'
