@@ -99,3 +99,4 @@ steps:
     publishRegistry: useFeed
     publishFeed: 'react_feed'
   displayName: 'Upload react package'
+  continueOnError: true
