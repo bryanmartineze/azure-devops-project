@@ -6,9 +6,10 @@
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "cp -r src/ dist/"
   },
   "keywords": [],
-  "author": "Wamaitha Nyamu",
+  "author": "Bryan Martinez",
   "license": "ISC",
   "dependencies": {
     "colors": "^1.4.0",
