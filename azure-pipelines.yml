@@ -93,20 +93,20 @@ steps:
   displayName: 'Upload react package'
   continueOnError: true
   
-  # insert your own steps here
-  - template: teamsnotification.yaml
-    parameters:
-      message: |
-        ✔ Pipeline was run successfully!
-        [Results]($(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId))        
-      webhookUrl: $(WEBHOOK_URL)
-      condition: succeeded()
-      displayName: Send success message
-  - template: teamsnotification.yaml
-    parameters:
-      message: | 
-        ❗ Pipeline failed!
-        [Results]($(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId))
-      webhookUrl: $(WEBHOOK_URL)
-      condition: failed()
-      displayName: Send failure message
+# insert your own steps here
+- template: teamsnotification.yaml
+  parameters:
+    message: |
+      ✔ Pipeline was run successfully!
+      [Results]($(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId))        
+    webhookUrl: $(WEBHOOK_URL)
+    condition: succeeded()
+    displayName: Send success message
+- template: teamsnotification.yaml
+  parameters:
+    message: | 
+      ❗ Pipeline failed!
+      [Results]($(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId))
+    webhookUrl: $(WEBHOOK_URL)
+    condition: failed()
+    displayName: Send failure message
