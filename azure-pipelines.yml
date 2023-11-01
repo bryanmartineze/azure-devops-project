@@ -58,10 +58,6 @@ steps:
 - script: |
     cd microservices/MyJokes
     npm install
-    current_date=$(date +'%Y-%m-%d')
-    new_version=$(npm version <major|minor|patch>)
-    updated_version="${new_version}-${current_date}"
-    echo "Updated version: $updated_version"
     npm run build
   displayName: 'build nodejs'
   
@@ -84,10 +80,6 @@ steps:
 - script: |
     cd microservices/frontend
     npm install
-    current_date=$(date +'%Y-%m-%d')
-    new_version=$(npm version <major|minor|patch>)
-    updated_version="${new_version}-${current_date}"
-    echo "Updated version: $updated_version"
     npm run build
   displayName: 'build react'
   
@@ -100,3 +92,21 @@ steps:
     publishFeed: 'react_feed'
   displayName: 'Upload react package'
   continueOnError: true
+  
+# insert your own steps here
+- template: teamsnotification.yaml
+  parameters:
+    message: |
+      ✔ Pipeline was run successfully!
+      [Results]($(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId))        
+    webhookUrl: $(WEBHOOK_URL)
+    condition: succeeded()
+    displayName: Send success message
+- template: teamsnotification.yaml
+  parameters:
+    message: | 
+      ❗ Pipeline failed!
+      [Results]($(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId))
+    webhookUrl: $(WEBHOOK_URL)
+    condition: failed()
+    displayName: Send failure message
