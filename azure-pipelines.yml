@@ -62,14 +62,14 @@ steps:
   displayName: 'build nodejs'
   
 #upload MyJokes Packages
-- task: Npm@1
-  inputs:
-    command: publish
-    workingDir: $(Build.SourcesDirectory)/microservices/MyJokes
-    publishRegistry: useFeed
-    publishFeed: 'nodejs_feed'
-  displayName: 'Upload nodejs package'
-  continueOnError: true
+# - task: Npm@1
+#   inputs:
+#     command: publish
+#     workingDir: $(Build.SourcesDirectory)/microservices/MyJokes
+#     publishRegistry: useFeed
+#     publishFeed: 'nodejs_feed'
+#   displayName: 'Upload nodejs package'
+#   continueOnError: true
   
 #Build Package frontend
 - task: NodeTool@0
@@ -84,14 +84,14 @@ steps:
   displayName: 'build react'
   
 #upload frontend Packages
-- task: Npm@1
-  inputs:
-    command: publish
-    workingDir: $(Build.SourcesDirectory)/microservices/frontend
-    publishRegistry: useFeed
-    publishFeed: 'react_feed'
-  displayName: 'Upload react package'
-  continueOnError: true
+# - task: Npm@1
+#   inputs:
+#     command: publish
+#     workingDir: $(Build.SourcesDirectory)/microservices/frontend
+#     publishRegistry: useFeed
+#     publishFeed: 'react_feed'
+#   displayName: 'Upload react package'
+#   continueOnError: true
 
 - script: |
     # Log in to Azure using the service principal
