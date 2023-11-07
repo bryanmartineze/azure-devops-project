@@ -104,7 +104,7 @@ steps:
   displayName: 'Create the container registry'
 
 - task: DockerInstaller@0
-  displayName: Docker Installer
+  displayName: Install Docker
   inputs:
     dockerVersion: 17.09.0-ce
     releaseType: stable
@@ -116,6 +116,7 @@ steps:
     az acr login --name $acrName
     docker tag dadjokes:latest $acrName.azurecr.io/dadjokes:latest
     docker push $acrName.azurecr.io/dadjokes:latest
+  displayName: Build dadjokes image and push to ACR
 
 # insert your own steps here
 - template: teamsnotification.yaml
