@@ -94,10 +94,7 @@ steps:
 #   continueOnError: true
 
 - script: |
-    # Log in to Azure using the service principal
     az login --service-principal -u $(AZURE_SERVICE_PRINCIPAL_ID) -p $(AZURE_SERVICE_PRINCIPAL_KEY) --tenant $(AZURE_TENANT_ID)
-
-    # Execute Azure CLI commands as needed
     az group create -l eastus -g 'azure-devops-rg'
     cd iac/
     az deployment group create -f 'container-registry.bicep' -g azure-devops-rg
@@ -112,6 +109,8 @@ steps:
 - script: | 
     cd microservices/DadJokes
     docker build -t dadjokes:latest .
+    az login --service-principal -u $(AZURE_SERVICE_PRINCIPAL_ID) -p $(AZURE_SERVICE_PRINCIPAL_KEY) --tenant $(AZURE_TENANT_ID)
+    az group create -l eastus -g 'azure-devops-rg'
     acrName=$(az acr list | jq -r '.[].name')
     az acr login --name $acrName
     docker tag dadjokes:latest $acrName.azurecr.io/dadjokes:latest
