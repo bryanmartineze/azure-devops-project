@@ -103,7 +103,19 @@ steps:
     az deployment group create -f 'container-registry.bicep' -g azure-devops-rg
   displayName: 'Create the container registry'
 
-  
+- task: DockerInstaller@0
+  displayName: Docker Installer
+  inputs:
+    dockerVersion: 17.09.0-ce
+    releaseType: stable
+
+- script: | 
+    cd microservices/DadJokes
+    docker build -t dadjokes:latest .
+    acrName=$(az acr list | jq -r '.[].name')
+    az acr login --name $acrName
+    docker tag dadjokes:latest $acrName.azurecr.io/dadjokes:latest
+    docker push $acrName.azurecr.io/dadjokes:latest
 
 # insert your own steps here
 - template: teamsnotification.yaml
