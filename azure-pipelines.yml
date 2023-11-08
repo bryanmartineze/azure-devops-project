@@ -113,7 +113,7 @@ steps:
     command: 'login'
 
 - script: |
-    cd iac/microservices/DadJokes
+    cd microservices/DadJokes
     docker build -t dadjokes:latest .
     docker tag dadjokes:latest $(acrName).azurecr.io/dadjokes:latest
     docker push $(acrName).azurecr.io/dadjokes:latest
