@@ -116,6 +116,7 @@ steps:
     cd microservices/DadJokes
     docker build -t dadjokes:latest .
     docker tag dadjokes:latest $(acrName).azurecr.io/dadjokes:latest
+    docker login $(acrName).azurecr.io -u $(AZURE_SERVICE_PRINCIPAL_ID) -p $(AZURE_SERVICE_PRINCIPAL_KEY)
     docker push $(acrName).azurecr.io/dadjokes:latest
   displayName: 'Build and push to ACR'
 
