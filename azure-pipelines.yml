@@ -99,14 +99,11 @@ steps:
     dockerVersion: 17.09.0-ce
     releaseType: stable
 
-- script: | 
-    cd microservices/DadJokes
-    docker build -t dadjokes:latest .
-    acrName=azuredevopsacrjocgia2hywuxy.azurecr.io
-    az acr login --name $acrName
-    docker tag dadjokes:latest $acrName.azurecr.io/dadjokes:latest
-    docker push $acrName.azurecr.io/dadjokes:latest
-  displayName: Build dadjokes image and push to ACR
+- task: Docker@2
+  inputs:
+    containerRegistry: 'azure-devops-project-sc'
+    command: 'buildAndPush'
+    Dockerfile: '$(Build.SourcesDirectory)/microservices/DadJokes/Dockerfile'
 
 # insert your own steps here
 - template: teamsnotification.yaml
