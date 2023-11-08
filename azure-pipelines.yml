@@ -99,15 +99,26 @@ steps:
     dockerVersion: 17.09.0-ce
     releaseType: stable
 
+# - task: Docker@2
+#   inputs:
+#     containerRegistry: 'azure-devops-project-sc'
+#     repository: 'microservices'
+#     command: 'buildAndPush'
+#     Dockerfile: '$(Build.SourcesDirectory)/microservices/DadJokes/Dockerfile'
+#     tags: latest
+
 - task: Docker@2
   inputs:
     containerRegistry: 'azure-devops-project-sc'
-    repository: 'microservices'
-    command: 'buildAndPush'
-    Dockerfile: '$(Build.SourcesDirectory)/microservices/DadJokes/Dockerfile'
-    tags: |
-      $(Build.BuildId)
-      latest
+    command: 'login'
+
+- script: |
+    cd iac/microservices/DadJokes
+    docker build -t dadjokes:latest .
+    docker tag dadjokes:latest $(acrName).azurecr.io/dadjokes:latest
+    docker push $(acrName).azurecr.io/dadjokes:latest
+  displayName: 'Build and push to ACR'
+
 
 # insert your own steps here
 - template: teamsnotification.yaml
