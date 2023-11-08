@@ -105,6 +105,9 @@ steps:
     repository: 'microservices'
     command: 'buildAndPush'
     Dockerfile: '$(Build.SourcesDirectory)/microservices/DadJokes/Dockerfile'
+    tags: |
+      $(Build.BuildId)
+      latest
 
 # insert your own steps here
 - template: teamsnotification.yaml
