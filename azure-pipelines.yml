@@ -102,8 +102,7 @@ steps:
 - script: | 
     cd microservices/DadJokes
     docker build -t dadjokes:latest .
-    az login --service-principal -u $(AZURE_SERVICE_PRINCIPAL_ID) -p $(AZURE_SERVICE_PRINCIPAL_KEY) --tenant $(AZURE_TENANT_ID)
-    acrName=$(az acr list | jq -r '.[].name')
+    acrName=azuredevopsacrjocgia2hywuxy.azurecr.io
     az acr login --name $acrName
     docker tag dadjokes:latest $acrName.azurecr.io/dadjokes:latest
     docker push $acrName.azurecr.io/dadjokes:latest
