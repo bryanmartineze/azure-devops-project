@@ -102,6 +102,7 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'azure-devops-project-sc'
+    repository: 'microservices'
     command: 'buildAndPush'
     Dockerfile: '$(Build.SourcesDirectory)/microservices/DadJokes/Dockerfile'
 
