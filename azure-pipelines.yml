@@ -130,21 +130,21 @@ steps:
   displayName: 'Build and push frontend to ACR'
 
 - script: |
-  cd microservices/Kanye
-  docker build -t kanye:latest .
-  acrName=$(az deployment group list --resource-group azure-devops-rg | jq -r '.[0].properties.outputResources[0].id' | xargs basename)
-  docker tag kanye:latest $(acrName).azurecr.io/kanye:latest
-  docker login $(acrName).azurecr.io -u $(AZURE_SERVICE_PRINCIPAL_ID) -p $(AZURE_SERVICE_PRINCIPAL_KEY)
-  docker push $(acrName).azurecr.io/kanye:latest
+    cd microservices/Kanye
+    docker build -t kanye:latest .
+    acrName=$(az deployment group list --resource-group azure-devops-rg | jq -r '.[0].properties.outputResources[0].id' | xargs basename)
+    docker tag kanye:latest $(acrName).azurecr.io/kanye:latest
+    docker login $(acrName).azurecr.io -u $(AZURE_SERVICE_PRINCIPAL_ID) -p $(AZURE_SERVICE_PRINCIPAL_KEY)
+    docker push $(acrName).azurecr.io/kanye:latest
 displayName: 'Build and push Kanye to ACR'
 
 - script: |
-  cd microservices/MyJokes
-  docker build -t myjokes:latest .
-  acrName=$(az deployment group list --resource-group azure-devops-rg | jq -r '.[0].properties.outputResources[0].id' | xargs basename)
-  docker tag myjokes:latest $(acrName).azurecr.io/myjokes:latest
-  docker login $(acrName).azurecr.io -u $(AZURE_SERVICE_PRINCIPAL_ID) -p $(AZURE_SERVICE_PRINCIPAL_KEY)
-  docker push $(acrName).azurecr.io/myjokes:latest
+    cd microservices/MyJokes
+    docker build -t myjokes:latest .
+    acrName=$(az deployment group list --resource-group azure-devops-rg | jq -r '.[0].properties.outputResources[0].id' | xargs basename)
+    docker tag myjokes:latest $(acrName).azurecr.io/myjokes:latest
+    docker login $(acrName).azurecr.io -u $(AZURE_SERVICE_PRINCIPAL_ID) -p $(AZURE_SERVICE_PRINCIPAL_KEY)
+    docker push $(acrName).azurecr.io/myjokes:latest
 displayName: 'Build and push MyJokes to ACR'
 
 # insert your own steps here
