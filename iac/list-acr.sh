@@ -1,6 +1,6 @@
 #!/bin/bash
 acrName=azuredevopsacrjocgia2hywuxy.azurecr.io
-repoName=microservices
+repoName=dadjokes
 
 az acr manifest list-metadata \
   --registry $acrName \

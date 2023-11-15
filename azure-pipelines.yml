@@ -92,6 +92,13 @@ steps:
 #     publishFeed: 'react_feed'
 #   displayName: 'Upload react package'
 #   continueOnError: true
+- script: |
+    az group create -l eastus -g 'azure-devops-rg'
+    az login --service-principal -u $(AZURE_SERVICE_PRINCIPAL_ID) -p $(AZURE_SERVICE_PRINCIPAL_KEY) --tenant $(AZURE_TENANT_ID)
+    cd iac/
+    az deployment group create -f 'container-registry.bicep' -g azure-devops-rg
+    
+  displayName: 'Create Azure Container Regitry'
 
 - task: DockerInstaller@0
   displayName: Install Docker
@@ -102,24 +109,16 @@ steps:
 # - task: Docker@2
 #   inputs:
 #     containerRegistry: 'azure-devops-project-sc'
-#     repository: 'microservices'
-#     command: 'buildAndPush'
-#     Dockerfile: '$(Build.SourcesDirectory)/microservices/DadJokes/Dockerfile'
-#     tags: latest
-
-- task: Docker@2
-  inputs:
-    containerRegistry: 'azure-devops-project-sc'
-    command: 'login'
+#     command: 'login'
 
 - script: |
     cd microservices/DadJokes
     docker build -t dadjokes:latest .
+    acrName=$(az deployment group list --resource-group azure-devops-rg | jq -r '.[0].properties.outputResources[0].id' | xargs basename)
     docker tag dadjokes:latest $(acrName).azurecr.io/dadjokes:latest
     docker login $(acrName).azurecr.io -u $(AZURE_SERVICE_PRINCIPAL_ID) -p $(AZURE_SERVICE_PRINCIPAL_KEY)
     docker push $(acrName).azurecr.io/dadjokes:latest
   displayName: 'Build and push to ACR'
-
 
 # insert your own steps here
 - template: teamsnotification.yaml
