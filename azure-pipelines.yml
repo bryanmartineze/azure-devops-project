@@ -131,7 +131,7 @@ steps:
 
 - script: |
   cd microservices/Kanye
-  docker build -t frontend:latest .
+  docker build -t kanye:latest .
   acrName=$(az deployment group list --resource-group azure-devops-rg | jq -r '.[0].properties.outputResources[0].id' | xargs basename)
   docker tag kanye:latest $(acrName).azurecr.io/kanye:latest
   docker login $(acrName).azurecr.io -u $(AZURE_SERVICE_PRINCIPAL_ID) -p $(AZURE_SERVICE_PRINCIPAL_KEY)
