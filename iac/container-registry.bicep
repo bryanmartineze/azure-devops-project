@@ -1,4 +1,4 @@
-param location string = 'East US' // Specify your desired Azure region
+param location string = resourceGroup().location // Specify your desired Azure region
 
 resource acrResource 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' = {
   name: 'AzureDevOpsACR${uniqueString(resourceGroup().id)}' // Replace with your desired ACR name
