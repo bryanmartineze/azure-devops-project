@@ -136,7 +136,7 @@ steps:
     docker tag kanye:latest $(acrName).azurecr.io/kanye:latest
     docker login $(acrName).azurecr.io -u $(AZURE_SERVICE_PRINCIPAL_ID) -p $(AZURE_SERVICE_PRINCIPAL_KEY)
     docker push $(acrName).azurecr.io/kanye:latest
-displayName: 'Build and push Kanye to ACR'
+  displayName: 'Build and push Kanye to ACR'
 
 - script: |
     cd microservices/MyJokes
@@ -145,7 +145,7 @@ displayName: 'Build and push Kanye to ACR'
     docker tag myjokes:latest $(acrName).azurecr.io/myjokes:latest
     docker login $(acrName).azurecr.io -u $(AZURE_SERVICE_PRINCIPAL_ID) -p $(AZURE_SERVICE_PRINCIPAL_KEY)
     docker push $(acrName).azurecr.io/myjokes:latest
-displayName: 'Build and push MyJokes to ACR'
+  displayName: 'Build and push MyJokes to ACR'
 
 # insert your own steps here
 - template: teamsnotification.yaml
